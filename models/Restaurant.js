@@ -1,11 +1,13 @@
-const {sequelize} = require('../db');
+const {sequelize} = require('./db');
 const { DataTypes } = require('sequelize');
 
 // TODO - create a Restaurant model
+
+
 const Restaurant = sequelize.define('restaurants', {
     name: DataTypes.STRING,
     location: DataTypes.STRING,
-    cuisineProperties: DataTypes.STRING,
+    cuisine: DataTypes.STRING,
 });
 
 
