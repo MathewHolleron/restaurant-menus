@@ -1,6 +1,6 @@
 const {Restaurant} = require('./Restaurant')
 const {Menu} = require('./Menu')
-const sequelize = require("../db")
+const {sequelize} = require("../db")
 
 async function main() {
     await sequelize.sync () ;
