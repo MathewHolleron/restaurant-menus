@@ -1,4 +1,4 @@
-const {sequelize} = require('./db');
+const {sequelize} = require('../db');
 const { DataTypes } = require('sequelize');
 
 // TODO - create a Restaurant model
