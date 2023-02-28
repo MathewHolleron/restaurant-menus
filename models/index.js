@@ -22,6 +22,7 @@ async function menu() {
     });
 }
 
+Menu.belongsTo(Restaurant);
+Restaurant.hasMany(Menu);
 
-
-module.exports = { Restaurant, Menu, restaurant, menu}
+module.exports = { Restaurant, Menu}

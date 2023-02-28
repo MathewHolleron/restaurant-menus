@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 
 // TODO - create a Restaurant model
 const Menu = sequelize.define('menu', {
-    title: DataTypes.STRING,
+    title: DataTypes.STRING
     
 });
 
