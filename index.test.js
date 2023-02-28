@@ -17,27 +17,66 @@ describe('Restaurant and Menu Models', () => {
     });
 
     test('can create a Restaurant', async () => {
-        // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
+        const expectedData = {
+            name: 'AppleBees',
+            location: 'Texas',
+            cuisine: 'FastFood',
+          };
+          await Restaurant.create(expectedData);
+          const restaurant1 = await Restaurant.findByPk(1);
+        expect(restaurant1.name).toBe('AppleBees');
+        expect(restaurant1.location).toBe('Texas');
+        expect(restaurant1.cuisine).toBe('FastFood');
     });
 
     test('can create a Menu', async () => {
-        // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
+        const expectedData = {
+            title: 'menu1',
+        };
+        const menu1 = new Menu(expectedData);
+        expect(menu1.title).toBe('menu1')
     });
 
     test('can find Restaurants', async () => {
-        // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
+        const expectedData = {
+            name: 'AppleBees',
+            location: 'Texas',
+            cuisine: 'FastFood',
+          };
+          
+          await Restaurant.create(expectedData);
+          await Restaurant.findByPk(1)
+          const foundRestaurant = await Restaurant.findByPk(1);
+          expect(foundRestaurant.name).toBe(expectedData.name);
+          expect(foundRestaurant.location).toBe(expectedData.location);
+          expect(foundRestaurant.cuisine).toBe(expectedData.cuisine);
     });
 
     test('can find Menus', async () => {
-        // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
+        const expectedData = {
+            title: 'menu1',
+        };
+        await Menu.create(expectedData);
+        await Menu.findByPk(1);
+        const foundMenu = await Menu.findByPk(1);
+        expect(foundMenu.title).toBe(expectedData.title);
+        
     });
 
     test('can delete Restaurants', async () => {
-        // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
+        const expectedData = {
+            name: 'AppleBees',
+            location: 'Texas',
+            cuisine: 'FastFood',
+          };
+          await Restaurant.create(expectedData);
+          const restaurant1 = await Restaurant.findByPk(1);
+          await Restaurant.destroy({
+            where: {
+                name: 'AppleBees'
+            }
+          })
+
+        expect(Restaurant.findByPk(1).name).toBe(undefined)
     });
 })

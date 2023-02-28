@@ -2,7 +2,7 @@ const {Restaurant} = require('./Restaurant')
 const {Menu} = require('./Menu')
 const {sequelize} = require("../db")
 
-async function main() {
+async function restaurant() {
     await sequelize.sync () ;
     
     await Restaurant.create({
@@ -12,6 +12,16 @@ async function main() {
     });
 }
 
-main();
+async function menu() {
+    await sequelize.sync () ;
+    
+    await Menu.create({
+        title: 'breakfast',
+        
+        
+    });
+}
 
-module.exports = { Restaurant, Menu }
+
+
+module.exports = { Restaurant, Menu, restaurant, menu}
