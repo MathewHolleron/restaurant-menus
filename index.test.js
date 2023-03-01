@@ -81,27 +81,20 @@ describe('Restaurant and Menu Models', () => {
     });
 
     test('can create a Menu associated with a Restaurant', async () => {
-        // Create a new Restaurant
         const expectedData = {
             name: 'AppleBees',
             location: 'Texas',
             cuisine: 'FastFood',
-          };
+        };
           
-          const restaurant1 = await Restaurant.create({expectedData});
-        // Create a new Menu associated with the Restaurant
+        await Restaurant.create(expectedData);
         
-        const menu1 = await Menu.create({title:'menu1'});
+        const menu1 = await Menu.create({title:'test'});
       
-        // Retrieve the Restaurant and its Menus from the database
-        const foundRestaurant = await Restaurant.findByPk(1);
-        console.log(foundRestaurant)
+        const foundRestaurant = await Restaurant.findByPk(4);
         await foundRestaurant.addMenus(menu1);
-        const menu2 = await foundRestaurant.getMenus();
+        const foundMenu = await foundRestaurant.getMenus();
         
-    // Verify that the Restaurant has the correct associated Menu
-    
-    expect(menu2.title).toBe('menu1');
-    
+        expect(foundMenu[0].title).toBe('test');
     });
 })
