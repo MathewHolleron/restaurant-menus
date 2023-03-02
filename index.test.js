@@ -1,5 +1,5 @@
 const {sequelize} = require('./db')
-const {Restaurant, Menu} = require('./models/index')
+const {Restaurant, Menu, Item} = require('./models/index')
 const {
     seedRestaurant,
     seedMenu,
@@ -9,11 +9,12 @@ describe('Restaurant and Menu Models', () => {
     /**
      * Runs the code prior to all tests
      */
-    beforeAll(async () => {
+    beforeEach(async () => {
         // the 'sync' method will create tables based on the model class
         // by setting 'force:true' the tables are recreated each time the 
         // test suite is run
         await sequelize.sync({ force: true });
+        
     });
 
     test('can create a Restaurant', async () => {
@@ -91,10 +92,49 @@ describe('Restaurant and Menu Models', () => {
         
         const menu1 = await Menu.create({title:'test'});
       
-        const foundRestaurant = await Restaurant.findByPk(4);
+        const foundRestaurant = await Restaurant.findByPk(1);
         await foundRestaurant.addMenus(menu1);
         const foundMenu = await foundRestaurant.getMenus();
         
         expect(foundMenu[0].title).toBe('test');
     });
-})
+
+    test('can create a item', async () => {
+        
+        
+        const item1 = await Item.create({name:'item'});
+        expect(item1.name).toBe('item')
+    });
+
+    test('can create a Menu associated with a Restaurant', async () => {
+        
+          
+        await Menu.create({title:'title'});
+        
+        const item1 = await Item.create({name:'test'});
+      
+        const foundmenu = await Menu.findByPk(1);
+        await foundmenu.addItem(item1);
+        const founditem = await foundmenu.getItems();
+        
+        expect(founditem[0].name).toBe('test');
+    });
+
+    test('can eager load menus', async () => {
+        // Create some test data
+        const menu = await Menu.create({title:'Test Menu'});
+        const item = await Item.create({name:'Test Item'});
+        await menu.addItems(item);
+    
+        // Query the database and eager load menus
+        const items = await Item.findAll({
+          include: Menu
+        });
+    
+        // Expect the query to return the correct data
+        expect(items.length).toBe(1);
+        expect(items[0].name).toBe('Test Item');
+        expect(items[0].menus.length).toBe(1);
+        expect(items[0].menus[0].title).toBe('Test Menu');
+      });
+});
